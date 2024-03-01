@@ -27,7 +27,7 @@ df['Completion PCT'] = df['Completion PCT'].str.replace("%","").astype(float)
 dff = df
 
 app = dash.Dash(__name__)
-
+server=app.server
 
 app.layout = html.Div([
     html.H1('Rival Roastery Expansion', style={'color': 'darkgoldenrod', 'fontSize': 40,'textAlign': 'center'}),
