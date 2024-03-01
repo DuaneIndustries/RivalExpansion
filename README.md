@@ -1,3 +1,3 @@
-# RivalExpansion
-Rival Expansion Project
+# Rival Expansion Project
+
 [Gantt Chart](https://rivalexpansion.onrender.com/)
