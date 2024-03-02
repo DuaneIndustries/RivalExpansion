@@ -24,6 +24,7 @@ df['Start Date'] = df['Start Date'].dt.normalize()
 df['End Date'] = df['End Date'].dt.normalize()
 df['Completion PCT'] = df['Completion PCT'].str.replace("%","").astype(float)
 
+df = df.sort_values(by='Start Date',ascending=False)
 dff = df
 
 app = dash.Dash(__name__)
