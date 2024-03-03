@@ -34,7 +34,7 @@ app.layout = html.Div([
     html.H1('Rival Roastery Expansion', style={'color': 'darkgoldenrod', 'fontSize': 40,'textAlign': 'center'}),
     html.Div(children=[
         dcc.Dropdown([x for x in sorted(dff['Project Section'].unique())],
-                              value=[],
+                              value=['Green Bean System','Post Roast','Roaster','Buildout'],
                              clearable=False,
                              multi=True,
                              style={'width':'65%'},
