@@ -40,7 +40,7 @@ app.layout = html.Div([
                              style={'width':'65%'},
                              id='section-dropdown'),
     ]),
-    html.Br(),
+    html.H3('hover over bars for additional detail', style={'color': 'dimgray', 'fontSize': 15,}),
     html.Div(id='gantt-container'),
     html.Br(),
     html.Div([
