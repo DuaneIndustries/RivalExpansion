@@ -10,7 +10,7 @@ from dash import dash_table
 import io
 import requests
 
-url='https://raw.githubusercontent.com/DuaneIndustries/RivalExpansion/main/RIval_Project_Calendar_v4.csv'
+url='https://raw.githubusercontent.com/DuaneIndustries/RivalExpansion/main/RIval_Project_Calendar_v5.csv'
 s=requests.get(url).content
 df=pd.read_csv(io.StringIO(s.decode('utf-8')))
 
