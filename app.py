@@ -109,7 +109,6 @@ def update_table(sect_v, selected_week):
         start_date = datetime.strptime('2024-02-16', '%Y-%m-%d') + timedelta(days=(int(selected_week) - 1) * 7)
         end_date = start_date + timedelta(days=6)
         filtered_df = dff[(dff['Start Date'] >= start_date) & (dff['Start Date'] <= end_date)]
-        fig.add_trace(go.scatter(week_markers, x='Start Date', y=[1] * len(week_markers)).data[0])
         return filtered_df.to_dict('records')
         
 # @app.callback(
