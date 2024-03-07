@@ -9,6 +9,7 @@ from dash.dependencies import Input,Output
 from dash import dash_table
 import io
 import requests
+from datetime import datetime, timedelta
 
 url='https://raw.githubusercontent.com/DuaneIndustries/RivalExpansion/main/RIval_Project_Calendar_v7.csv'
 s=requests.get(url).content
@@ -27,6 +28,12 @@ df['Completion PCT'] = df['Completion PCT'].str.replace("%","").astype(float)
 df = df.sort_values(by='Start Date',ascending=False)
 dff = df
 
+# Determine the start of each week
+start_dates = pd.date_range(start='2024-02-16', end='2024-04-26', freq='W-MON')
+
+# Create a DataFrame with start dates of each week
+week_markers = pd.DataFrame({'Start Date': start_dates, 'Week_Start': True})
+
 app = dash.Dash(__name__)
 server=app.server
 
@@ -41,6 +48,25 @@ app.layout = html.Div([
                              id='section-dropdown'),
     ]),
     html.H3('hover over bars for additional detail', style={'color': 'dimgray', 'fontSize': 15,}),
+    html.Div([
+        dcc.RadioItems(
+        id='week-selector',
+        options=[
+            {'label': 'All Weeks', 'value': 0},
+            {'label': '2/26', 'value': 1},
+            {'label': '3/4', 'value': 2},
+            {'label': '3/11', 'value': 3},
+            {'label': '3/18', 'value': 4},
+            {'label': '3/25', 'value': 5},
+            {'label': '4/1', 'value': 6},
+            {'label': '4/8', 'value': 7},
+            {'label': '4/15', 'value': 8},
+        ],
+        value=0,
+        labelStyle={'display': 'inline-block'},
+        inputStyle={"margin-left": "10px"},
+    )]),
+    html.Br(),
     html.Div(id='gantt-container'),
     html.Br(),
     html.Div([
@@ -64,18 +90,40 @@ app.layout = html.Div([
     ]),
 ],className='row')
 
-@app.callback(
-    Output('datatable-interactivity','data'),
-    Input("section-dropdown", "value")
-)
 
-def filter_table(sect_v):
+@app.callback(
+    Output('datatable-interactivity', 'data'),
+    [Input('section-dropdown', 'value'),
+     Input('week-selector', 'value')]
+)
+def update_table(sect_v, selected_week):
     dff = df.copy()
-    if sect_v :
-        dff = dff[dff["Project Section"].isin(sect_v)]
+    # Filter by section dropdown
+    if sect_v:
+        dff = dff[dff['Project Section'].isin(sect_v)]
+
+    # Filter by week selector
+    if selected_week == 0:
         return dff.to_dict('records')
-    else :
-        return dff.to_dict('records')
+    else:
+        start_date = datetime.strptime('2024-02-16', '%Y-%m-%d') + timedelta(days=(int(selected_week) - 1) * 7)
+        end_date = start_date + timedelta(days=6)
+        filtered_df = dff[(dff['Start Date'] >= start_date) & (dff['Start Date'] <= end_date)]
+        fig.add_trace(go.scatter(week_markers, x='Start Date', y=[1] * len(week_markers)).data[0])
+        return filtered_df.to_dict('records')
+        
+# @app.callback(
+#     Output('datatable-interactivity','data'),
+#     Input("section-dropdown", "value")
+# )
+
+# def filter_table(sect_v):
+#     dff = df.copy()
+#     if sect_v :
+#         dff = dff[dff["Project Section"].isin(sect_v)]
+#         return dff.to_dict('records')
+#     else :
+#         return dff.to_dict('records')
 #Gantt Chart
 
 @app.callback(
