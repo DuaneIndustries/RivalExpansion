@@ -29,7 +29,7 @@ df = df.sort_values(by='Start Date',ascending=False)
 dff = df
 
 # Determine the start of each week
-start_dates = pd.date_range(start='2024-02-16', end='2024-04-26', freq='W-MON')
+start_dates = pd.date_range(start='2024-02-26', end='2024-04-26', freq='W-MON')
 
 # Create a DataFrame with start dates of each week
 week_markers = pd.DataFrame({'Start Date': start_dates, 'Week_Start': True})
