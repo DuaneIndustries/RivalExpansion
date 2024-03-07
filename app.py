@@ -61,6 +61,7 @@ app.layout = html.Div([
             {'label': '3/25', 'value': 6},
             {'label': '4/1', 'value': 7},
             {'label': '4/8', 'value': 8},
+            {'label': '4/15', 'value': 9},
         ],
         value=0,
         labelStyle={'display': 'inline-block'},
