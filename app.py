@@ -163,6 +163,7 @@ def update_gantt(all_rows_data, slctd_row_indices, slct_rows_names, slctd_rows,
     # dff['Budget Number'] = dff["Budget Number"].astype(float)
     # dff['Cost to Date'] = dff["Cost to Date"].astype(float)
     # dff['Progress'] = dff["Progress"].astype(float)
+    dff['Pattern'] = dff['Completion PCT'].apply(lambda x: 'solid' if 0 < x < 100 else 'none')
 
     return [
         dcc.Graph(id='gantt-chart', figure=px.timeline(
@@ -176,7 +177,8 @@ def update_gantt(all_rows_data, slctd_row_indices, slct_rows_names, slctd_rows,
             category_orders={"Project Section": ["Buildout", "Green Bean System", "Roaster", "Post Roast"]},
             color_continuous_scale='blackbody',
             color_continuous_midpoint=50,
-            opacity=.5
+            opacity=.5,
+            pattern_shape='Pattern'
         ).update_layout(
             paper_bgcolor='whitesmoke',
             plot_bgcolor='whitesmoke',
