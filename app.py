@@ -85,6 +85,7 @@ app.layout = html.Div([
             page_action="native",
             page_current= 0,
             page_size= 6,
+            style_as_list_view=True,
         )
     ]),
 ],className='row')
