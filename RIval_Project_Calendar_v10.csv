@@ -1,13 +1,13 @@
 Project Section,Task,Crew,Start Date,Duration,End Date,Day Completed,Completion PCT
 Roaster,Install Loring ,Duane,2/16/24,6,2/23/24,6,100.00%
-Green Bean Systemm,GB system - fabricate bins,Big Joe,2/26/24,60,4/25/24,20,33.33%
+Green Bean System,GB system - fabricate bins,Big Joe,2/26/24,60,4/25/24,20,33.33%
 Roaster,Electric install for Loring,Sebastian,3/4/24,10,3/14/24,10,100.00%
 Roaster,Install Plumbing for Loring,Dan Bajo,4/22/24,5,4/26/24,0,0.00%
-Green Bean Systemm,GB System - Locate Frame,Duane,3/11/24,5,3/15/24,5,100.00%
+Green Bean System,GB System - Locate Frame,Duane,3/11/24,5,3/15/24,5,100.00%
 Roaster, Install Torch Booster + Tie in Gas for Loring,Dan Bajo,4/22/24,1,4/26/24,0,0.00%
 Post Roast,Ship Mixer,Duane,4/15/24,1,4/16/24,0,0.00%
-Green Bean Systemm,GB System - Run Electric and Compressed Air ,Duane,4/22/24,1,4/23/24,0.5,50.00%
-Green Bean Systemm,GB System - Tie in Compressed Air and connections,Dan Bajo,4/22/24,1,4/23/24,0,0.00%
+Green Bean System,GB System - Run Electric and Compressed Air ,Duane,4/22/24,1,4/23/24,0.5,50.00%
+Green Bean System,GB System - Tie in Compressed Air and connections,Dan Bajo,4/22/24,1,4/23/24,0,0.00%
 Post Roast,Install Air Compressor,Duane,4/8/24,1,4/8/24,0,0.00%
 Buildout,Dan Bajo Buildout -  Framing,Dan Bajo,4/22/24,10,4/26/24,0,0.00%
 Buildout,Dan Bajo Buildout - Plumbing,Dan Bajo,4/29/24,10,5/10/24,0,0.00%
@@ -19,18 +19,18 @@ Post Roast,Install Mixer with Pneucon,Duane,4/17/24,1,4/18/24,0,0.00%
 Buildout,Dan Bajo Buildout - Electric,Dan Bajo,5/6/24,14,5/17/24,0,0.00%
 Buildout,Dan Bajo Buildout - Sheetrock,Dan Bajo,4/29/24,10,5/10/24,0,0.00%
 Roaster,Relocate SF roaster,Duane,4/29/24,5,5/3/24,0,0.00%
-Green Bean Systemm,Gb system - Wire Chainvey,Duane,4/22/24,5,4/29/24,0,0.00%
-Green Bean Systemm,Jacob Tubing,Duane,4/22/24,2,4/29/24,0,0.00%
-Green Bean Systemm,Ship Chainvey,Duane,4/6/24,3,4/9/24,0,0.00%
+Green Bean System,Gb system - Wire Chainvey,Duane,4/22/24,5,4/29/24,0,0.00%
+Green Bean System,Jacob Tubing,Duane,4/22/24,2,4/29/24,0,0.00%
+Green Bean System,Ship Chainvey,Duane,4/6/24,3,4/9/24,0,0.00%
 Roaster,Start up Loring,Duane,4/22/24,5,4/26/24,0,0.00%
-Green Bean Systemm,Start up GB system,Duane,5/20/24,5,5/24/24,0,0.00%
-Green Bean Systemm,GB system - Recieve Chainvey,Duane,4/9/24,1,4/10/24,0,0.00%
+Green Bean System,Start up GB system,Duane,5/20/24,5,5/24/24,0,0.00%
+Green Bean System,GB system - Recieve Chainvey,Duane,4/9/24,1,4/10/24,0,0.00%
 Roaster,Install Loring Outlet,Duane,4/17/24,1,4/18/24,0,0.00%
 Post Roast,Install General Pack + Pneucon,Duane,4/17/24,2,4/18/24,0,0.00%
 Post Roast,Install MPE Grinder + Pneucon,Duane,4/18/24,2,4/19/24,0,0.00%
 Post Roast,Install Weigh Right + Pneucon,Duane,4/18/24,2,4/19/24,0,0.00%
 Buildout,Dan Bajo Buildout - HVAC,Dan Bajo,5/6/24,10,5/10/24,0,0.00%
-Green Bean Systemm,GB system - load and transport bins,Big Joe,4/29/24,2,4/30/24,0,0.00%
-Green Bean Systemm,GB system - Recieve + Install Bins,Big Joe,4/30/24,2,5/1/24,0,0.00%
-Green Bean Systemm,GB system - Controls,Sebastian,5/6/24,2,5/8/24,0,0.00%
-Green Bean Systemm,Install Chainvey,Duane,5/6/24,5,5/10/24,0,0.00%
+Green Bean System,GB system - load and transport bins,Big Joe,4/29/24,2,4/30/24,0,0.00%
+Green Bean System,GB system - Recieve + Install Bins,Big Joe,4/30/24,2,5/1/24,0,0.00%
+Green Bean System,GB system - Controls,Sebastian,5/6/24,2,5/8/24,0,0.00%
+Green Bean System,Install Chainvey,Duane,5/6/24,5,5/10/24,0,0.00%
