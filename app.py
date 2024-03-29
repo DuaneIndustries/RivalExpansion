@@ -2,6 +2,7 @@
 import pandas as pd
 import plotly
 import plotly.express as px
+import plotly.graph_objects as go
 import dash
 from dash import dcc
 from dash import html
@@ -11,9 +12,16 @@ import io
 import requests
 from datetime import datetime, timedelta
 
-url='https://raw.githubusercontent.com/DuaneIndustries/RivalExpansion/main/RIval_Project_Calendar_v10.csv'
+
+# sheet_id = "1K5W7XFm7JVIG9d7j6RuK37AaH-0h6mNRH0fTUhKyo58”
+# sheet_name = "Data”
+# url = f”https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
+
+url='https://raw.githubusercontent.com/DuaneIndustries/RivalExpansion/main/RIval_Project_Calendar_v12.csv'
 s=requests.get(url).content
 df=pd.read_csv(io.StringIO(s.decode('utf-8')))
+
+# df = pd.read_csv("/Users/caseyleo/Desktop/RIval_Project_Calendar.csv")
 
 
 
@@ -24,47 +32,60 @@ df['End Date'] = df['End Date'].dt.normalize()
 df['Completion PCT'] = df['Completion PCT'].str.replace("%","").astype(float)
 
 df = df.sort_values(by='Start Date',ascending=False)
+
 dff = df
 
 # Determine the start of each week
-start_dates = pd.date_range(start='2024-02-26', end='2024-04-26', freq='W-MON')
+start_dates = pd.date_range(start='2024-02-16', end='2024-04-26', freq='W-MON')
 
 # Create a DataFrame with start dates of each week
 week_markers = pd.DataFrame({'Start Date': start_dates, 'Week_Start': True})
 
+# Calculate the start and end dates of the current week
+today = datetime.today()
+start_of_week = today - timedelta(days=today.weekday())
+end_of_week = start_of_week + timedelta(days=6)
+
 app = dash.Dash(__name__)
 server=app.server
+
 
 app.layout = html.Div([
     html.H1('Rival Roastery Expansion', style={'color': 'darkgoldenrod', 'fontSize': 40,'textAlign': 'center'}),
     html.Div(children=[
         dcc.Dropdown([x for x in sorted(dff['Project Section'].unique())],
-                              value=['Green Bean System','Post Roast','Roaster','Buildout'],
+                              value=[],
                              clearable=False,
                              multi=True,
                              style={'width':'65%'},
                              id='section-dropdown'),
+        dcc.DatePickerRange(
+            id='date-picker-range',
+            start_date=start_of_week,
+            end_date=end_of_week,
+            style={'display': 'inline-block', 'float': 'right'}
+        ),
     ]),
     html.H3('hover over bars for additional detail', style={'color': 'dimgray', 'fontSize': 15,}),
-    html.Div([
-        dcc.RadioItems(
-        id='week-selector',
-        options=[
-            {'label': 'All Weeks', 'value': 0},
-            {'label': '2/12', 'value': 1},
-            {'label': '2/26', 'value': 2},
-            {'label': '3/4', 'value': 3},
-            {'label': '3/11', 'value': 4},
-            {'label': '3/18', 'value': 5},
-            {'label': '3/25', 'value': 6},
-            {'label': '4/1', 'value': 7},
-            {'label': '4/8', 'value': 8},
-            {'label': '4/15', 'value': 9},
-        ],
-        value=0,
-        labelStyle={'display': 'inline-block'},
-        inputStyle={"margin-left": "10px"},
-    )]),
+#     html.Div([
+#         # dcc.RadioItems(
+#         # id='week-selector',
+#         # options=[
+#         #     {'label': 'All Weeks', 'value': 0},
+#         #     {'label': '2/26', 'value': 1},
+#         #     {'label': '3/4', 'value': 2},
+#         #     {'label': '3/11', 'value': 3},
+#         #     {'label': '3/18', 'value': 4},
+#         #     {'label': '3/25', 'value': 5},
+#         #     {'label': '4/1', 'value': 6},
+#         #     {'label': '4/8', 'value': 7},
+#         #     {'label': '4/15', 'value': 8},
+#         # ]),
+#         # value=0,
+#         # labelStyle={'display': 'inline-block'},
+#         # inputStyle={"margin-left": "10px"},
+# ]),
+
     html.Br(),
     html.Div(id='gantt-container'),
     html.Br(),
@@ -90,39 +111,46 @@ app.layout = html.Div([
     ]),
 ],className='row')
 
-
 @app.callback(
     Output('datatable-interactivity', 'data'),
     [Input('section-dropdown', 'value'),
-     Input('week-selector', 'value')]
+     Input('date-picker-range', 'start_date'),
+     Input('date-picker-range','end_date')]
 )
-def update_table(sect_v, selected_week):
+
+def update_table(section_value, start_date, end_date):
     dff = df.copy()
+
     # Filter by section dropdown
-    if sect_v:
-        dff = dff[dff['Project Section'].isin(sect_v)]
+    if section_value:
+        dff = dff[dff['Project Section'].isin(section_value)]
 
-    # Filter by week selector
-    if selected_week == 0:
-        return dff.to_dict('records')
-    else:
-        start_date = datetime.strptime('2024-02-16', '%Y-%m-%d') + timedelta(days=(int(selected_week) - 1) * 7)
-        end_date = start_date + timedelta(days=6)
-        filtered_df = dff[(dff['Start Date'] >= start_date) & (dff['Start Date'] <= end_date)]
-        return filtered_df.to_dict('records')
-        
-# @app.callback(
-#     Output('datatable-interactivity','data'),
-#     Input("section-dropdown", "value")
-# )
+    # Filter by date range
+    if start_date and end_date:
+        start_date = pd.to_datetime(start_date)
+        end_date = pd.to_datetime(end_date)
+        dff = dff[(dff['Start Date'] >= start_date) & (dff['Start Date'] <= end_date)]
 
-# def filter_table(sect_v):
+    return dff.to_dict('records')
+
+# def update_table(sect_v, selected_week):
 #     dff = df.copy()
-#     if sect_v :
-#         dff = dff[dff["Project Section"].isin(sect_v)]
+#     # Filter by section dropdown
+#     if sect_v:
+#         dff = dff[dff['Project Section'].isin(sect_v)]
+#
+#     # Filter by week selector
+#     if selected_week == 0:
 #         return dff.to_dict('records')
-#     else :
-#         return dff.to_dict('records')
+#     else:
+#         start_date = datetime.strptime('2024-02-16', '%Y-%m-%d') + timedelta(days=(int(selected_week) - 1) * 7)
+#         end_date = start_date + timedelta(days=6)
+#         filtered_df = dff[(dff['Start Date'] >= start_date) & (dff['Start Date'] <= end_date)]
+#         # fig.add_trace(go.scatter(week_markers, x='Start Date', y=[1] * len(week_markers)).data[0])
+#         return filtered_df.to_dict('records')
+
+
+
 #Gantt Chart
 
 @app.callback(
@@ -163,9 +191,8 @@ def update_gantt(all_rows_data, slctd_row_indices, slct_rows_names, slctd_rows,
     # dff['Cost to Date'] = dff["Cost to Date"].astype(float)
     # dff['Progress'] = dff["Progress"].astype(float)
     dff['Pattern'] = dff['Completion PCT'].apply(lambda x: 'solid' if 0 < x < 100 else 'none')
-
-    return [
-        dcc.Graph(id='gantt-chart', figure=px.timeline(
+    dff['Highlight'] = (dff['Completion PCT'] == 0) & (pd.to_datetime('today') > df['Start Date'])
+    fig = dcc.Graph(id='gantt-chart', figure=px.timeline(
             data_frame=dff,
             x_start="Start Date",
             x_end="End Date",
@@ -190,11 +217,8 @@ def update_gantt(all_rows_data, slctd_row_indices, slct_rows_names, slctd_rows,
             hoverlabel=dict(
                 bgcolor='gold',
                 font_size=9,)
-        ))
-
-    ]
-
-
+        ).update_traces(line_dash='dot', selector=dict(Highlight=True)))
+    return [fig]
 
 # def update_data(chosen_rows):
 #     if len(chosen_rows)==0:
