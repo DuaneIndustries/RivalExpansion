@@ -10,7 +10,7 @@ from dash.dependencies import Input,Output
 from dash import dash_table
 import io
 import requests
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 
 # sheet_id = "1K5W7XFm7JVIG9d7j6RuK37AaH-0h6mNRH0fTUhKyo58”
@@ -61,8 +61,8 @@ app.layout = html.Div([
                              id='section-dropdown'),
         dcc.DatePickerRange(
             id='date-picker-range',
-            start_date=start_of_week,
-            end_date=end_of_week,
+            start_date=date(2024,4,1),
+            end_date=date(2024,5,6),
             style={'display': 'inline-block', 'float': 'right'}
         ),
     ]),
